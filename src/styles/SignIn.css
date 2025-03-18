@@ -1,0 +1,97 @@
+/* Sign In Page Styles */
+.signIn-container {
+  display: flex;
+  height: 100vh;
+  background: #f9f9f9;
+}
+
+.signIn-left {
+  width: 50%;
+  background: linear-gradient(to bottom, #f58634, #247ba0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.signIn-logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.signIn-title {
+  margin-top: 20px;
+  color: white !important;
+}
+
+.signIn-description {
+  font-size: 16px;
+  color: white;
+}
+
+.signIn-illustration {
+  margin-top: 30px;
+  width: 80%;
+  height: auto;
+}
+
+.signIn-right {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signIn-form-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 80%;
+}
+
+.signIn-welcome {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.signIn-subtext {
+  font-size: 14px;
+  color: #929192;
+}
+
+.signIn-form {
+  margin-top: 20px;
+}
+
+.signIn-forgot {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.signIn-button {
+  background-color: #f58634;
+  border: none;
+  height: 40px;
+  font-size: 16px;
+}
+
+.signIn-divider {
+  margin: 15px 0;
+  color: #b6b6b6;
+}
+
+.signIn-google {
+  border: 1px solid #cacac9;
+  color: #242325;
+  height: 40px;
+}
+
+.signIn-footer {
+  margin-top: 10px;
+  font-size: 14px;
+}
