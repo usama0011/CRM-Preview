@@ -23,9 +23,18 @@ const App = () => {
           />
           <span className="brand-name">Dejyle</span>
         </div>
-        <Button onClick={handleSignIn} className="sign-in-btn">
-          Sign in
-        </Button>
+        <div>
+          <Button onClick={handleSignIn} className="sign-in-btn">
+            Sign in
+          </Button>
+          <Button
+            style={{ marginLeft: "10px" }}
+            onClick={() => navigate("/signup")}
+            className="sign-in-btn"
+          >
+            Sign Up
+          </Button>
+        </div>
       </header>
 
       {/* Hero Section */}

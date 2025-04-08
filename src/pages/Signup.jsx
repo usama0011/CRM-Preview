@@ -65,7 +65,8 @@ const Signup = () => {
       const response = await axios.post(
         "http://54.243.4.152:3000/api/auth/signup",
         {
-          name: `${firstname} ${lastname}`,
+          firstname: firstname,
+          lastname: lastname,
           email,
           mobileNumber,
           password,
