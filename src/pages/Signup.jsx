@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../styles/SignUPPage.css";
+import "../styles/SignUpPage.css";
 import Logo from "../assets/signuplogocredentials.png";
 
 const Signup = () => {
