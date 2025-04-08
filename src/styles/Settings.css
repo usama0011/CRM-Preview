@@ -1,0 +1,40 @@
+.delivery-report-container {
+  background: #f9f9f9;
+}
+
+.delivery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.download-report-btn {
+  background: #f58634;
+  color: white;
+  border: none;
+}
+
+.delivery-tabs .ant-tabs-tab {
+  font-weight: bold;
+}
+
+.status-badge {
+  font-weight: bold;
+}
+
+.status-badge.delivered {
+  color: #20bf55;
+}
+
+.status-badge.failed {
+  color: #d12c2c;
+}
+
+.delete-icon {
+  color: red;
+  cursor: pointer;
+}
+
+.table-container {
+  margin-top: 20px;
+}

@@ -1,0 +1,56 @@
+.sms-container {
+  height: 100vh;
+}
+
+.sms-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.sms-history-btn {
+  background: none;
+  border: 1px solid #f58634;
+  color: #f58634;
+  padding: 5px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.sms-tabs .ant-tabs-tab {
+  font-weight: bold;
+  color: #b6b6b6;
+}
+
+.sms-tabs .ant-tabs-tab-active {
+  color: #f58634 !important;
+  font-weight: bold;
+}
+
+.sms-tabs .ant-tabs-ink-bar {
+  background: #f58634 !important;
+}
+
+.sms-form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-item {
+  flex: 1;
+}
+
+.send-btn {
+  background: #f58634;
+  border: none;
+  width: 100%;
+  margin-top: 10px;
+}

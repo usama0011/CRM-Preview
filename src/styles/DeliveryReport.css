@@ -1,0 +1,40 @@
+.delivery-container {
+  background: #f9f9f9;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.download-report-btn {
+  background: #f58634;
+  color: white;
+  border: none;
+}
+
+.delivery-tabs .ant-tabs-tab {
+  font-weight: bold;
+}
+
+.status {
+  font-weight: bold;
+}
+
+.status.delivered {
+  color: green;
+}
+
+.status.failed {
+  color: red;
+}
+
+.delete-icon {
+  color: #d12c2c;
+  cursor: pointer;
+}
+
+.delete-icon:hover {
+  color: #ff4d4f;
+}

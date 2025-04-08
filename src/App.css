@@ -1,0 +1,70 @@
+.landing-container {
+  background: #f9f9f9;
+  text-align: center;
+}
+
+.landing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background: white;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-image {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.brand-name {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.sign-in-btn {
+  border: 1px solid #f58634;
+  color: #f58634;
+  border-radius: 20px;
+  padding: 8px 20px;
+}
+
+.hero-section {
+  padding: 50px 20px;
+}
+
+.hero-title {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.hero-subtext {
+  display: block;
+  font-size: 16px;
+  color: gray;
+  margin: 10px 0;
+}
+
+.cta-button {
+  background: #f58634;
+  border: none;
+  color: white;
+  font-size: 16px;
+  padding: 10px 25px;
+  border-radius: 20px;
+  margin-top: 15px;
+}
+
+.dashboard-preview {
+  margin-top: 40px;
+}
+
+.dashboard-image {
+  max-width: 80%;
+  border-radius: 10px;
+}

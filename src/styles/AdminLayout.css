@@ -1,0 +1,274 @@
+/* === Global Admin Layout Styles === */
+.admin-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+/* === Sidebar Styles === */
+.sidebar {
+  background: #ffffff;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+  height: 100vh;
+  transition: all 0.3s ease;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.sidebar-logo .logo {
+  width: 40px;
+  height: 40px;
+}
+
+.sidebar-logo .brand-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 10px;
+  color: #333;
+}
+
+.custom-menu {
+  padding-top: 10px;
+}
+
+.custom-menu .ant-menu-item {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+}
+
+.custom-menu .ant-menu-item:hover {
+  background: rgba(245, 134, 52, 0.2);
+  color: #f58634;
+}
+
+.custom-menu .ant-menu-item-selected {
+  background: rgba(245, 134, 52, 0.15);
+  color: #f58634;
+}
+
+.sidebar-footer {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+/* === Header Styles === */
+.admin-header {
+  background: #fff;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.menu-toggle:hover {
+  color: #f58634;
+}
+
+.search-bar {
+  width: 500px;
+  border-radius: 8px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  transition: all 0.3s;
+}
+
+.search-bar:focus {
+  border-color: #f58634;
+  box-shadow: 0px 0px 5px rgba(245, 134, 52, 0.4);
+}
+
+/* === Search Modal === */
+.search-modal {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  background: white;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 8px;
+  display: none;
+}
+
+.search-modal.active {
+  display: block;
+}
+
+/* === Header Icons === */
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-icons .icon {
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.header-icons .icon:hover {
+  color: #f58634;
+}
+
+/* === User Avatar Dropdown === */
+.user-avatar {
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.user-avatar:hover {
+  box-shadow: 0px 0px 8px rgba(245, 134, 52, 0.5);
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  background: white;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  width: 180px;
+  display: none;
+}
+
+.user-dropdown.active {
+  display: block;
+}
+
+.user-dropdown .dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.user-dropdown .dropdown-item:hover {
+  background: rgba(245, 134, 52, 0.1);
+  color: #f58634;
+}
+
+/* === Page Content === */
+.admin-content {
+  background: #f9f9f9;
+  flex-grow: 1;
+}
+
+.admin-layout {
+  height: 100vh;
+}
+
+.sidebar {
+  background: #fff;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.brand-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.sidebar-footer {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.logout-btn {
+  width: 100%;
+  border: none;
+  background: none;
+  font-size: 16px;
+  color: #d12c2c;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.search-container {
+  position: relative;
+}
+
+.search-bar {
+  width: 500px;
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+
+.search-bar.active {
+  width: 300px;
+}
+
+.search-dropdown {
+  position: absolute;
+  width: 100%;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 999;
+}
+
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.user-avatar {
+  cursor: pointer;
+}
+
+.notifications-dropdown {
+  position: absolute;
+  top: 50px;
+  width: 300px;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  width: 250px;
+  right: 60px;
+}

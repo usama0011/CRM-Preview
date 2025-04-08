@@ -1,0 +1,42 @@
+.contacts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.contacts-actions button {
+  margin-left: 10px;
+}
+
+.status-badge.active {
+  color: #fff;
+  background: green;
+  padding: 5px 10px;
+  border-radius: 12px;
+}
+
+.status-badge.inactive {
+  color: #fff;
+  background: red;
+  padding: 5px 10px;
+  border-radius: 12px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.cancel-btn {
+  background: transparent;
+  color: #f58634;
+  border: 1px solid #f58634;
+}
+
+.add-btn {
+  background: #f58634;
+  color: white;
+  border: none;
+}

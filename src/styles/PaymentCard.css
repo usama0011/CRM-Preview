@@ -1,0 +1,52 @@
+.payment-container {
+  background: #f9f9f9;
+}
+
+.payment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.payment-history-btn {
+  background: transparent;
+  border: 1px solid #f58634;
+  color: #f58634;
+}
+
+.payment-tabs .ant-tabs-tab {
+  font-weight: bold;
+}
+
+.payment-form {
+  max-width: 500px;
+  margin-top: 20px;
+}
+
+.active-tab {
+  background: #f58634 !important;
+  color: white !important;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cancel-btn {
+  background: transparent;
+  border: 1px solid #f58634;
+  color: #f58634;
+}
+
+.pay-btn,
+.confirm-btn {
+  background: #f58634;
+  color: white;
+  border: none;
+}

@@ -99,68 +99,9 @@ const Overview = () => {
   return (
     <Layout className="overview-container">
       {/* Sidebar */}
-      <Sider width={230} className="sidebar">
-        <div className="logo">
-          <img
-            className="logo-image"
-            src="https://s3-alpha-sig.figma.com/img/f050/a83a/e31753cdfc55a452f9e80da2ef64a3b5?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=KFH2mv2I1IVUpnsHdtV7XRGi276THvB9yRmE6~6nOQ7qEUbFz1IvmUHNG40AF2mk8v~bGZdAa09~EASeDmsot8tzx7e4sbI75eh66wfhnIRPjOcKvEnyUYNaJzTyTUYZ9m69ylSktZn~DShj0Pcfak95cB8ugArYFpI19s-LlIUlP79bNNXShYbjNvZ~n0z0IF~tfTvvMbKa6WxdEP4fOOAWaiE4z16BAXPSueajx7FrYj7-bTB9gbcZs6DNE61ScSCS5SPbz4KPSeOU5H1xMYHo333S66zhrqK-xw8ZG5U7xua4OJ2ad~vblfFph5F2EDpDSZ14~Q1iDcvusRUmtA__"
-            alt="Dejyle"
-          />
-          <span className="brand-name">Dejyle</span>
-        </div>
-
-        <Menu
-          theme="light"
-          mode="vertical"
-          defaultSelectedKeys={["1"]}
-          className="custom-menu"
-        >
-          <Menu.Item key="1" icon={<HomeOutlined />} className="menu-item">
-            Overview
-          </Menu.Item>
-          <Menu.Item key="2" icon={<MessageOutlined />} className="menu-item">
-            Messages
-          </Menu.Item>
-          <Menu.Item key="3" icon={<ContactsOutlined />} className="menu-item">
-            Contacts
-          </Menu.Item>
-          <Menu.Item key="4" icon={<FileTextOutlined />} className="menu-item">
-            Delivery Report
-          </Menu.Item>
-          <Menu.Item
-            key="5"
-            icon={<CreditCardOutlined />}
-            className="menu-item"
-          >
-            Payment
-          </Menu.Item>
-          <Menu.Item key="6" icon={<SettingOutlined />} className="menu-item">
-            Settings
-          </Menu.Item>
-          <Menu.Item
-            key="7"
-            icon={<LogoutOutlined />}
-            className="menu-item logout"
-          >
-            Logout
-          </Menu.Item>
-        </Menu>
-      </Sider>
 
       {/* Main Content */}
       <Layout>
-        <Header className="header">
-          <MenuOutlined className="menu-icon" />
-          <Input
-            className="search-bar"
-            prefix={<SearchOutlined />}
-            placeholder="Search"
-          />
-          <div className="user-infso">
-            <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1DeyZNqRdLF9WiyJOo7YQW5HxbSp3F6tNQQ&s" />
-            <Text>Joe Doe</Text>
-          </div>
-        </Header>
         <Content className="content-section">
           <Title level={3}>Welcome back, Joe</Title>
 
