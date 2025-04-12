@@ -4,20 +4,32 @@
   display: flex;
   flex-direction: row;
 }
-
-/* === Sidebar Styles === */
 .sidebar {
-  background: #ffffff;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+  background: #fff;
+  position: fixed; /* Make it fixed */
+  left: 0;
+  top: 0;
   height: 100vh;
-  transition: all 0.3s ease;
+  width: 300px; /* Your fixed width */
+  overflow-y: auto;
+  padding: 10px 20px;
+  z-index: 1000;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+  border-right: 1px solid #e6e6e6; /* Add this line */
 }
 
+/* Optional: Hide scrollbar but still scrollable */
+.sidebar::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Logo + toggle align center */
 .sidebar-logo {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 16px;
+  justify-content: space-between;
+  padding: 16px 20px;
 }
 
 .sidebar-logo .logo {
@@ -27,37 +39,33 @@
 
 .sidebar-logo .brand-name {
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 600;
   margin-left: 10px;
   color: #333;
+  flex: 1;
 }
 
-.custom-menu {
-  padding-top: 10px;
-}
-
-.custom-menu .ant-menu-item {
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  padding: 12px 16px;
-}
-
-.custom-menu .ant-menu-item:hover {
-  background: rgba(245, 134, 52, 0.2);
-  color: #f58634;
-}
-
-.custom-menu .ant-menu-item-selected {
-  background: rgba(245, 134, 52, 0.15);
-  color: #f58634;
-}
-
+/* Logout Styling */
 .sidebar-footer {
   position: absolute;
-  bottom: 10px;
+  bottom: 20px;
   width: 100%;
   text-align: center;
+}
+
+.logout-btn {
+  border: none;
+  background: none;
+  color: #d12c2c;
+  font-size: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logout-btn:hover {
+  color: #ff4d4f;
 }
 
 /* === Header Styles === */
@@ -167,10 +175,16 @@
   color: #f58634;
 }
 
-/* === Page Content === */
 .admin-content {
   background: #f9f9f9;
   flex-grow: 1;
+  padding: 0px;
+  transition: margin-left 0.3s ease;
+  margin-left: 300px; /* Default when sidebar is expanded */
+}
+
+.admin-content.collapsed {
+  margin-left: 80px; /* or whatever width your collapsed sidebar becomes */
 }
 
 .admin-layout {
@@ -181,18 +195,10 @@
   background: #fff;
 }
 
-.sidebar-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
+.logosss {
+  width: 90px;
+  height: auto;
 }
-
-.logo {
-  width: 40px;
-  height: 40px;
-}
-
 .brand-name {
   font-size: 18px;
   font-weight: bold;
@@ -271,4 +277,100 @@
   padding: 10px;
   width: 250px;
   right: 60px;
+}
+/* Remove background from the menu */
+.custom-menu {
+  background: transparent !important;
+  border-right: none !important;
+}
+
+/* ===========================
+   Responsive Breakpoints
+   =========================== */
+
+/* Tablets (below 1024px) */
+@media (max-width: 1024px) {
+  .admin-content {
+    margin-left: 80px; /* Collapse sidebar automatically */
+  }
+
+  .sidebar {
+    width: 80px !important;
+    padding: 10px 10px;
+  }
+
+  .sidebar-logo {
+    justify-content: center;
+  }
+
+  .logout-btn span {
+    display: none;
+  }
+
+  .admin-header {
+    padding: 10px 15px;
+  }
+
+  .search-bar {
+    width: 300px;
+  }
+}
+
+/* Mobile (below 768px) */
+@media (max-width: 768px) {
+  .admin-layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: absolute;
+    height: 100vh;
+    z-index: 999;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.expanded {
+    transform: translateX(0);
+  }
+
+  .admin-content {
+    margin-left: 0 !important;
+  }
+
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .search-bar {
+    width: 100%;
+  }
+
+  .header-icons {
+    justify-content: flex-end;
+    width: 100%;
+  }
+}
+
+/* Very small phones (below 480px) */
+@media (max-width: 480px) {
+  .search-bar {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .admin-profile-info {
+    display: none; /* Hide name/email if space is tight */
+  }
+
+  .notifications-dropdown,
+  .user-dropdown {
+    right: 10px !important;
+  }
+
+  .notifications-dropdown {
+    width: 90%;
+  }
 }

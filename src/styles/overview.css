@@ -1,32 +1,7 @@
-.sidebar {
-  background: #fff;
-  padding-top: 20px;
-  min-height: 100vh;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 15px 20px;
-}
-
-.logo-image {
-  width: 50px;
-  height: 50px;
-}
-
-.brand-name {
-  font-size: 20px;
-  font-weight: bold;
-  color: #242325;
-}
-
 .header {
   background: #fff;
   display: flex;
   justify-content: space-between;
-  padding: 15px;
 }
 .content-section {
   padding: 30px;
@@ -105,7 +80,7 @@
 }
 
 .activity-chart {
-  flex: 3;
+  flex: 3 !important;
   background: white;
   padding: 20px;
   border-radius: 10px;
@@ -158,32 +133,99 @@
   margin-top: 10px;
   color: #242325;
 }
-
-.custom-menu .menu-item {
-  border-radius: 8px;
-  margin: 5px 0;
-  font-size: 14px;
-  transition: all 0.3s ease-in-out;
+.activity-chart-scroll {
+  overflow-x: auto;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 10px;
 }
 
-.custom-menu .menu-item:hover {
-  background: rgba(245, 134, 52, 0.1);
+/* ==========================
+   Responsive Overview Page
+   ========================== */
+
+/* Tablets and below (1024px) */
+@media (max-width: 1024px) {
+  .stats-grid {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .stat-card {
+    width: 48%;
+    margin-bottom: 20px;
+  }
+
+  .activity-section {
+    flex-direction: column;
+  }
+
+  .activity-chart,
+  .right-sidebar {
+    width: 100%;
+  }
+
+  .right-sidebar {
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .balance-card,
+  .quick-links-card {
+    flex: 1;
+  }
 }
 
-.custom-menu .ant-menu-item-selected {
-  background: rgba(245, 134, 52, 0.2) !important;
-  color: #f58634 !important;
-  font-weight: bold;
-  border-left: 5px solid #f58634;
+/* Mobile (768px and below) */
+@media (max-width: 768px) {
+  .stat-card {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .activity-section {
+    gap: 15px;
+  }
+
+  .right-sidebar {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .balance-card,
+  .quick-links-card {
+    width: 100%;
+  }
+
+  .card-header {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .top-up-btn {
+    width: 100%;
+  }
 }
 
-.custom-menu .menu-item .anticon {
-  color: #6d6c6e;
-}
+/* Extra small devices (max-width: 480px) */
+@media (max-width: 480px) {
+  .card-value {
+    font-size: 22px;
+  }
 
-.custom-menu .logout {
-  position: absolute;
-  bottom: 10px;
-  left: 20px;
-  color: red;
+  .card-subtext {
+    font-size: 11px;
+  }
+
+  .quick-link {
+    font-size: 13px;
+  }
+
+  .search-bar {
+    width: 100%;
+  }
+
+  .top-up-btn {
+    font-size: 14px;
+  }
 }

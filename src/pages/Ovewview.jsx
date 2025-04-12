@@ -1,26 +1,5 @@
-import React from "react";
-import {
-  Layout,
-  Menu,
-  Card,
-  Typography,
-  Avatar,
-  Table,
-  Button,
-  Space,
-  Input,
-} from "antd";
-import {
-  HomeOutlined,
-  MessageOutlined,
-  ContactsOutlined,
-  FileTextOutlined,
-  CreditCardOutlined,
-  SettingOutlined,
-  LogoutOutlined,
-  MenuOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { Layout, Typography, Card, Button, Table } from "antd";
 import {
   LineChart,
   Line,
@@ -31,76 +10,66 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import "../styles/overview.css";
+import api from "../components/api";
+import RecentActivity from "../components/RecentActivity";
 
-const { Header, Sider, Content } = Layout;
+const { Content } = Layout;
 const { Title, Text } = Typography;
 
-const data = [
-  { day: "Mon", Success: 900, Pending: 300, Failed: 200 },
-  { day: "Tue", Success: 1200, Pending: 500, Failed: 400 },
-  { day: "Wed", Success: 800, Pending: 200, Failed: 300 },
-  { day: "Thu", Success: 1100, Pending: 400, Failed: 500 },
-  { day: "Fri", Success: 1400, Pending: 600, Failed: 700 },
-  { day: "Sat", Success: 1000, Pending: 500, Failed: 600 },
-  { day: "Sun", Success: 950, Pending: 450, Failed: 550 },
-];
-
-const columns = [
-  { title: "S/N", dataIndex: "sn", key: "sn" },
-  { title: "Task", dataIndex: "task", key: "task" },
-  { title: "Date", dataIndex: "date", key: "date" },
-  { title: "Time", dataIndex: "time", key: "time" },
-  {
-    title: "Status",
-    dataIndex: "status",
-    key: "status",
-    render: (status) => (
-      <span className={`status-badge ${status.toLowerCase()}`}>{status}</span>
-    ),
-  },
-];
-
-const tableData = [
-  {
-    key: "1",
-    sn: "1",
-    task: "Contact upload",
-    date: "8/8/2024",
-    time: "6:45pm",
-    status: "Successful",
-  },
-  {
-    key: "2",
-    sn: "2",
-    task: "Email sent",
-    date: "9/10/2024",
-    time: "10:00am",
-    status: "Failed",
-  },
-  {
-    key: "3",
-    sn: "3",
-    task: "Account setting",
-    date: "12/12/2024",
-    time: "8:50am",
-    status: "Successful",
-  },
-  {
-    key: "4",
-    sn: "4",
-    task: "Sms sent",
-    date: "1/1/2025",
-    time: "12:00pm",
-    status: "Pending",
-  },
-];
-
 const Overview = () => {
+  const [balance, setBalance] = useState(0);
+  const [stats, setStats] = useState({
+    total: 0,
+    pending: 0,
+    failed: 0,
+    success: 0,
+  });
+
+  const [chartData, setChartData] = useState([]);
+
+  const fetchBalance = async () => {
+    try {
+      const res = await api.get("/transactions/getBalance");
+      setBalance(res.data.balance);
+    } catch (err) {
+      console.error("Failed to fetch balance", err);
+    }
+  };
+
+  const fetchGraphData = async () => {
+    try {
+      const res = await api.get("/sms/history");
+      const rawData = res.data.data || [];
+      const grouped = {};
+
+      rawData.forEach((item) => {
+        const day = new Date(item.date).toLocaleDateString("en-US", {
+          weekday: "short",
+        });
+        if (!grouped[day]) {
+          grouped[day] = { Success: 0, Failed: 0, Pending: 0 };
+        }
+        grouped[day][item.status] = (grouped[day][item.status] || 0) + 1;
+      });
+
+      const chart = Object.entries(grouped).map(([day, values]) => ({
+        day,
+        ...values,
+      }));
+
+      setChartData(chart);
+    } catch (err) {
+      console.error("Failed to fetch chart data", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchBalance();
+    fetchGraphData();
+  }, []);
+
   return (
     <Layout className="overview-container">
-      {/* Sidebar */}
-
-      {/* Main Content */}
       <Layout>
         <Content className="content-section">
           <Title level={3}>Welcome back, Joe</Title>
@@ -109,11 +78,10 @@ const Overview = () => {
             <Card className="stat-card">
               <div className="card-header">
                 <Text className="card-title">Total Messages Sent</Text>
-                <span className="card-icon">📩</span>{" "}
-                {/* Replace with actual icon */}
+                <span className="card-icon">📩</span>
               </div>
               <Title level={2} className="card-value">
-                12,000
+                {stats.total}
               </Title>
               <Text className="card-subtext">(SMS, Email, WhatsApp)</Text>
             </Card>
@@ -124,7 +92,7 @@ const Overview = () => {
                 <span className="card-icon">⏳</span>
               </div>
               <Title level={2} className="card-value">
-                150
+                {stats.pending}
               </Title>
               <Text className="card-subtext">(SMS, Email, WhatsApp)</Text>
             </Card>
@@ -135,7 +103,7 @@ const Overview = () => {
                 <span className="card-icon">✅</span>
               </div>
               <Title level={2} className="card-value">
-                85%
+                {stats.success}%
               </Title>
               <Text className="card-subtext">(SMS, Email, WhatsApp)</Text>
             </Card>
@@ -146,18 +114,16 @@ const Overview = () => {
                 <span className="card-icon">❌</span>
               </div>
               <Title level={2} className="card-value">
-                15%
+                {stats.failed}%
               </Title>
               <Text className="card-subtext">(SMS, Email, WhatsApp)</Text>
             </Card>
           </div>
 
           <div className="activity-section">
-            {/* Graph */}
-            <div className="activity-chart">
-              <Title level={4}>Activity Trends</Title>
+            <div className="activity-chart activity-chart-scroll">
               <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={data}>
+                <LineChart data={chartData}>
                   <XAxis dataKey="day" />
                   <YAxis />
                   <Tooltip />
@@ -169,27 +135,19 @@ const Overview = () => {
               </ResponsiveContainer>
             </div>
 
-            {/* Right Side - Balance & Quick Links */}
             <div className="right-sidebar">
-              {/* Current Balance Card */}
               <Card className="balance-card">
                 <Text className="balance-title">Current Balance</Text>
                 <Title level={3} className="balance-amount">
-                  ₦2000
+                  ₦{balance}
                 </Title>
                 <Button type="primary" className="top-up-btn">
                   Top up +
                 </Button>
               </Card>
 
-              {/* Quick Links */}
-              <Card className="quick-links-card" style={{ textAlign: "left" }}>
-                <Text
-                  className="quick-links-title"
-                  style={{ textAlign: "left" }}
-                >
-                  Quick Links
-                </Text>
+              <Card className="quick-links-card">
+                <Text className="quick-links-title">Quick Links</Text>
                 <div className="quick-link">
                   <span>📨</span> Send Messages
                 </div>
@@ -200,9 +158,7 @@ const Overview = () => {
             </div>
           </div>
 
-          {/* Recent Activity Table */}
-          <Title level={4}>Recent Activity</Title>
-          <Table columns={columns} dataSource={tableData} pagination={false} />
+          <RecentActivity />
         </Content>
       </Layout>
     </Layout>

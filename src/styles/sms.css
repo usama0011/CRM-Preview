@@ -54,3 +54,75 @@
   width: 100%;
   margin-top: 10px;
 }
+
+/* =============================
+   Responsive Styling for SMS Page
+   ============================= */
+
+/* Tablets and below (1024px) */
+@media (max-width: 1024px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .sms-history-btn,
+  .send-new-btn {
+    width: auto;
+  }
+
+  .ant-table {
+    overflow-x: auto;
+  }
+}
+
+/* Mobile (768px and below) */
+@media (max-width: 768px) {
+  .sms-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .sms-tabs .ant-tabs-tab {
+    font-size: 14px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .form-item {
+    width: 100%;
+  }
+
+  .send-btn {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .ant-table-wrapper {
+    overflow-x: auto;
+  }
+}
+
+/* Extra Small Devices (480px and below) */
+@media (max-width: 480px) {
+  .sms-history-btn,
+  .send-new-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .sms-header h3 {
+    font-size: 20px;
+  }
+
+  .send-btn {
+    font-size: 13px;
+  }
+
+  .sms-tabs .ant-tabs-tab {
+    font-size: 13px;
+  }
+}

@@ -1,40 +1,165 @@
-.delivery-report-container {
-  background: #f9f9f9;
+/* === Base Styles === */
+.settings-container {
+  min-height: 100vh;
 }
 
-.delivery-header {
+.settings-tabs .ant-tabs-tab {
+  font-weight: bold;
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 24px;
+}
+
+.profile-avatar {
+  margin-bottom: 10px;
+  background-color: #f58634;
+}
+
+.profile-name {
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.profile-role {
+  color: gray;
+  font-size: 14px;
+}
+
+.settings-form,
+.security-form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 16px;
+  flex-wrap: nowrap;
+}
+
+.form-item {
+  flex: 1;
+  min-width: 0;
+}
+
+.modal-footer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  margin-top: 24px;
+  gap: 16px;
 }
 
-.download-report-btn {
+.cancel-btn {
+  background: transparent;
+  border: 1px solid #f58634;
+  color: #f58634;
+}
+
+.save-btn {
   background: #f58634;
   color: white;
   border: none;
 }
 
-.delivery-tabs .ant-tabs-tab {
-  font-weight: bold;
+/* === RESPONSIVE STYLES === */
+
+/* Tablet (<=1024px) */
+@media (max-width: 1024px) {
+  .form-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-footer {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .profile-name {
+    font-size: 16px;
+  }
+
+  .profile-role {
+    font-size: 13px;
+  }
 }
 
-.status-badge {
-  font-weight: bold;
+/* Mobile (<=768px) */
+@media (max-width: 768px) {
+  .settings-container {
+    padding: 16px;
+  }
+
+  .profile-avatar {
+    width: 60px;
+    height: 60px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .form-item {
+    width: 100%;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cancel-btn,
+  .save-btn {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .ant-switch {
+    scale: 0.95;
+    margin-left: 10px;
+  }
 }
 
-.status-badge.delivered {
-  color: #20bf55;
-}
+/* Extra Small (<=480px) */
+@media (max-width: 480px) {
+  .settings-container {
+    padding: 12px;
+  }
 
-.status-badge.failed {
-  color: #d12c2c;
-}
+  .profile-name {
+    font-size: 15px;
+  }
 
-.delete-icon {
-  color: red;
-  cursor: pointer;
-}
+  .profile-role {
+    font-size: 12px;
+  }
 
-.table-container {
-  margin-top: 20px;
+  .settings-tabs .ant-tabs-tab {
+    font-size: 13px;
+  }
+
+  .form-item input,
+  .form-item .ant-select {
+    font-size: 13px;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .save-btn,
+  .cancel-btn {
+    width: 100%;
+    font-size: 13px;
+  }
 }

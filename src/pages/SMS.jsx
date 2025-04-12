@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Layout,
   Menu,
@@ -10,6 +10,7 @@ import {
   Select,
   Button,
   Table,
+  message,
 } from "antd";
 import {
   HomeOutlined,
@@ -23,138 +24,217 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import "../styles/sms.css";
-
+import api from "../components/api";
 const { Header, Sider, Content } = Layout;
 const { Title, Text } = Typography;
 const { Option } = Select;
 
 // SMS Form Component
-const SMSForm = () => (
-  <Form layout="vertical" className="sms-form">
-    <div className="form-row">
-      <Form.Item label="Sender Name" className="form-item">
-        <Input disabled placeholder="Doe Joe" />
-      </Form.Item>
-      <Form.Item label="SMS Type" className="form-item">
-        <Select defaultValue="Option1">
-          <Option value="Option1">Option1</Option>
-        </Select>
-      </Form.Item>
-    </div>
+const SMSForm = () => {
+  const [form] = Form.useForm();
 
-    <div className="form-row">
-      <Form.Item label="Add Recipient Contact" className="form-item">
-        <Select defaultValue="Option1">
-          <Option value="Option1">Option1</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item label="Message Template" className="form-item">
-        <Select defaultValue="Option1">
-          <Option value="Option1">Option1</Option>
-        </Select>
-      </Form.Item>
-    </div>
+  const handleSendSMS = async () => {
+    try {
+      const values = await form.validateFields();
 
-    <Form.Item label="Write Message">
-      <Input.TextArea rows={4} placeholder="Type Message" />
-    </Form.Item>
+      await api.post("/sms/sendSMS", {
+        senderName: "Doe Joe",
+        smsType: "single",
+        recipientType: "manual",
+        contacts: "0800000000",
+        customMessage: values.message, // ✅ Plain message instead of template
+      });
 
-    <Button type="primary" className="send-btn">
-      Send
-    </Button>
-  </Form>
-);
+      message.success("SMS sent successfully!");
+    } catch (err) {
+      message.error(err?.response?.data?.error || "Failed to send SMS");
+      console.error(err);
+    }
+  };
 
-const EmailForm = () => (
-  <Form layout="vertical" className="email-form">
-    <div className="form-row">
-      <Form.Item label="Sender ID" className="form-item">
-        <Input disabled placeholder="Doe Joe" />
-      </Form.Item>
-      <Form.Item label="Sender Email Address" className="form-item">
-        <Input disabled placeholder="email@example.com" />
-      </Form.Item>
-    </div>
+  return (
+    <Form layout="vertical" className="sms-form" form={form}>
+      <div className="form-row">
+        <Form.Item label="Sender Name" className="form-item">
+          <Input disabled placeholder="Doe Joe" />
+        </Form.Item>
+        <Form.Item label="SMS Type" className="form-item">
+          <Select defaultValue="Option1">
+            <Option value="Option1">Option1</Option>
+          </Select>
+        </Form.Item>
+      </div>
 
-    <div className="form-row">
-      <Form.Item label="Subject" className="form-item">
-        <Input placeholder="Enter subject" />
-      </Form.Item>
-      <Form.Item label="Email Type" className="form-item">
-        <Select defaultValue="Option1">
-          <Option value="Option1">Option1</Option>
-        </Select>
-      </Form.Item>
-    </div>
+      <div className="form-row">
+        <Form.Item label="Add Recipient Contact" className="form-item">
+          <Select defaultValue="Option1">
+            <Option value="Option1">Option1</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item label="Message Template" className="form-item">
+          <Select defaultValue="Option1">
+            <Option value="Option1">Option1</Option>
+          </Select>
+        </Form.Item>
+      </div>
 
-    <div className="form-row">
-      <Form.Item label="Add Recipient Contact" className="form-item">
-        <Select defaultValue="Option1">
-          <Option value="Option1">Option1</Option>
-        </Select>
+      <Form.Item
+        label="Write Message"
+        name="message"
+        rules={[{ required: true, message: "Please enter your message" }]}
+      >
+        <Input.TextArea rows={4} placeholder="Type Message" />
       </Form.Item>
-      <Form.Item label="Message Template" className="form-item">
-        <Select defaultValue="Option1">
-          <Option value="Option1">Option1</Option>
-        </Select>
-      </Form.Item>
-    </div>
 
-    <Form.Item label="Write Message">
-      <Input.TextArea rows={4} placeholder="Type Message" />
-    </Form.Item>
+      <Button type="primary" className="send-btn" onClick={handleSendSMS}>
+        Send
+      </Button>
+    </Form>
+  );
+};
 
-    <Button type="primary" className="send-btn">
-      Send
-    </Button>
-  </Form>
-);
-const WhatsAppForm = () => (
-  <Form layout="vertical" className="whatsapp-form">
-    <div className="form-row">
-      <Form.Item label="Sender ID" className="form-item">
-        <Input disabled placeholder="Doe Joe" />
-      </Form.Item>
-      <Form.Item label="Sender WhatsApp Number" className="form-item">
-        <Input disabled placeholder="234 000 0000" />
-      </Form.Item>
-    </div>
+const EmailForm = () => {
+  const [form] = Form.useForm();
 
-    <div className="form-row">
-      <Form.Item label="WhatsApp Type" className="form-item">
-        <Select defaultValue="Option1">
-          <Option value="Option1">Option1</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item label="Add Recipient Contact" className="form-item">
-        <Select defaultValue="Option1">
-          <Option value="Option1">Option1</Option>
-        </Select>
-      </Form.Item>
-    </div>
+  const handleSendEmail = async () => {
+    try {
+      const values = await form.validateFields();
 
-    <div className="form-row">
-      <Form.Item label="Message Format" className="form-item">
-        <Select defaultValue="Option1">
-          <Option value="Option1">Option1</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item label="Message Template" className="form-item">
-        <Select defaultValue="Option1">
-          <Option value="Option1">Option1</Option>
-        </Select>
-      </Form.Item>
-    </div>
+      await api.post("/email/sendEmail", {
+        senderId: "Doe Joe",
+        senderEmail: "email@example.com",
+        subject: values.subject,
+        emailType: "single",
+        recipientType: "manual",
+        contacts: "example@mail.com",
+        messageTemplate: "default",
+        customMessage: values.message,
+        variables: {},
+      });
 
-    <Form.Item label="Write Message">
-      <Input.TextArea rows={4} placeholder="Type message" />
-    </Form.Item>
+      message.success("Email sent successfully!");
+    } catch (err) {
+      message.error("Failed to send email");
+    }
+  };
 
-    <Button type="primary" className="send-btn">
-      Send
-    </Button>
-  </Form>
-);
+  return (
+    <Form layout="vertical" className="email-form">
+      <div className="form-row">
+        <Form.Item label="Sender ID" className="form-item">
+          <Input disabled placeholder="Doe Joe" />
+        </Form.Item>
+        <Form.Item label="Sender Email Address" className="form-item">
+          <Input disabled placeholder="email@example.com" />
+        </Form.Item>
+      </div>
+
+      <div className="form-row">
+        <Form.Item label="Subject" className="form-item">
+          <Input placeholder="Enter subject" />
+        </Form.Item>
+        <Form.Item label="Email Type" className="form-item">
+          <Select defaultValue="Option1">
+            <Option value="Option1">Option1</Option>
+          </Select>
+        </Form.Item>
+      </div>
+
+      <div className="form-row">
+        <Form.Item label="Add Recipient Contact" className="form-item">
+          <Select defaultValue="Option1">
+            <Option value="Option1">Option1</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item label="Message Template" className="form-item">
+          <Select defaultValue="Option1">
+            <Option value="Option1">Option1</Option>
+          </Select>
+        </Form.Item>
+      </div>
+
+      <Form.Item label="Write Message">
+        <Input.TextArea rows={4} placeholder="Type Message" />
+      </Form.Item>
+
+      <Button type="primary" className="send-btn" onClick={handleSendEmail}>
+        Send
+      </Button>
+    </Form>
+  );
+};
+const WhatsAppForm = () => {
+  const [form] = Form.useForm();
+
+  const handleSendWhatsApp = async () => {
+    try {
+      const values = await form.validateFields();
+
+      await api.post("/whatsapp/send-message", {
+        senderId: "Doe Joe",
+        senderNumber: "2340000000",
+        whatsappType: "single",
+        recipientType: "manual",
+        contacts: "2348436517352",
+        sendMode: "now",
+        messageFormat: "text only",
+        messageTemplate: "default",
+        customMessage: values.message,
+        variables: {},
+      });
+
+      message.success("WhatsApp message sent!");
+    } catch (err) {
+      message.error("Failed to send WhatsApp message");
+    }
+  };
+  return (
+    <Form layout="vertical" className="whatsapp-form">
+      <div className="form-row">
+        <Form.Item label="Sender ID" className="form-item">
+          <Input disabled placeholder="Doe Joe" />
+        </Form.Item>
+        <Form.Item label="Sender WhatsApp Number" className="form-item">
+          <Input disabled placeholder="234 000 0000" />
+        </Form.Item>
+      </div>
+
+      <div className="form-row">
+        <Form.Item label="WhatsApp Type" className="form-item">
+          <Select defaultValue="Option1">
+            <Option value="Option1">Option1</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item label="Add Recipient Contact" className="form-item">
+          <Select defaultValue="Option1">
+            <Option value="Option1">Option1</Option>
+          </Select>
+        </Form.Item>
+      </div>
+
+      <div className="form-row">
+        <Form.Item label="Message Format" className="form-item">
+          <Select defaultValue="Option1">
+            <Option value="Option1">Option1</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item label="Message Template" className="form-item">
+          <Select defaultValue="Option1">
+            <Option value="Option1">Option1</Option>
+          </Select>
+        </Form.Item>
+      </div>
+
+      <Form.Item label="Write Message">
+        <Input.TextArea rows={4} placeholder="Type message" />
+      </Form.Item>
+
+      <Button type="primary" className="send-btn">
+        Send
+      </Button>
+    </Form>
+  );
+};
 
 // SMS History Table Component
 const SMSHistory = ({ onBack }) => {
@@ -437,6 +517,18 @@ const SMSHistory = ({ onBack }) => {
 const SMS = () => {
   const [activeTab, setActiveTab] = useState("SMS");
   const [showHistory, setShowHistory] = useState(false);
+  useEffect(() => {
+    const fetchSMSHistory = async () => {
+      try {
+        const response = await api.get("/sms/history");
+        // Map response to table format here
+      } catch (err) {
+        console.error("Failed to fetch SMS history", err);
+      }
+    };
+
+    fetchSMSHistory();
+  }, []);
 
   return (
     <Layout className="sms-container">

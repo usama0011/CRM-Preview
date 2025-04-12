@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Layout, Typography, Button, Table, Spin, message } from "antd";
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
-import axios from "axios";
+import axios from "../components/api";
 import "../styles/Contacts.css";
 import AddContactModal from "../components/AddContactModal";
 import UploadContactModal from "../components/UploadContactModal";
@@ -34,9 +34,7 @@ const Contacts = () => {
   const fetchContacts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        "http://54.243.4.152:3000/api/contacts/getContacts"
-      );
+      const response = await axios.get("/contacts/getContacts");
       const data = response.data.data || [];
 
       // Map contacts for table

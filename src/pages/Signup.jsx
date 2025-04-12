@@ -5,7 +5,7 @@ import {
   EyeTwoTone,
   GoogleOutlined,
 } from "@ant-design/icons";
-import axios from "axios";
+import axios from "../components/api";
 import { useNavigate } from "react-router-dom";
 import "../styles/SignUpPage.css";
 import Logo from "../assets/signuplogocredentials.png";
@@ -62,18 +62,20 @@ const Signup = () => {
     try {
       setLoading(true);
 
-      const response = await axios.post(
-        "http://54.243.4.152:3000/api/auth/signup",
-        {
-          firstname: firstname,
-          lastname: lastname,
-          email,
-          mobileNumber,
-          password,
-        }
-      );
+      const response = await axios.post("/auth/signup", {
+        firstname,
+        lastname,
+        email,
+        mobileNumber,
+        password,
+        confirmPassword,
+      });
+      if (response.data?.message === "Signup successful") {
+        localStorage.setItem("tenantId", response.data.tenantId);
 
-      if (response.data) {
+        // Update Axios instance header dynamically
+        axios.defaults.headers["x-tenant-id"] = response.data.tenantId;
+
         message.success("Signup successful! Redirecting to login...");
         setTimeout(() => {
           navigate("/signin");

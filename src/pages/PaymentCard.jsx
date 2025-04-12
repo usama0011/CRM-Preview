@@ -1,37 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Layout,
-  Menu,
   Typography,
-  Avatar,
-  Input,
   Tabs,
   Form,
-  Select,
+  Input,
   Button,
   Table,
   Radio,
+  message,
 } from "antd";
-import {
-  HomeOutlined,
-  MessageOutlined,
-  ContactsOutlined,
-  FileTextOutlined,
-  CreditCardOutlined,
-  SettingOutlined,
-  LogoutOutlined,
-  MenuOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
 import "../styles/PaymentCard.css";
+import api from "../components/api";
+// ✅ Make sure this is your central axios config
 
-const { Header, Sider, Content } = Layout;
+const { Content } = Layout;
 const { Title, Text } = Typography;
-const { Option } = Select;
 
 const PaymentCard = () => {
   const [activeTab, setActiveTab] = useState("Card");
+  const [form] = Form.useForm();
+  const [paymentHistory, setPaymentHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+  // Table Columns
   const columns = [
     { title: "S/N", dataIndex: "sn", key: "sn" },
     { title: "Payment Method", dataIndex: "method", key: "method" },
@@ -40,43 +32,70 @@ const PaymentCard = () => {
     { title: "Status", dataIndex: "status", key: "status" },
   ];
 
-  const paymentHistory = [
-    {
-      sn: 1,
-      method: "Card",
-      amount: "₦10,000",
-      date: "12/05/2024",
-      status: "Successful",
-    },
-    {
-      sn: 2,
-      method: "Bank Transfer",
-      amount: "₦5,000",
-      date: "10/05/2024",
-      status: "Pending",
-    },
-  ];
+  // Fetch Payment History
+  const fetchPaymentHistory = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get("/payments/history");
+      const mapped = response.data.data.map((item, index) => ({
+        sn: index + 1,
+        method: item.paymentMethod || "N/A",
+        amount: `₦${item.amount}`,
+        date: item.date || "N/A",
+        status: item.status || "Pending",
+      }));
+      setPaymentHistory(mapped);
+    } catch (err) {
+      message.error("Failed to load payment history");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPaymentHistory();
+  }, []);
+
+  // Handle Payment
+  const handlePayment = async (method) => {
+    try {
+      const values = await form.validateFields();
+      const payload = {
+        amount: parseFloat(values.amount),
+        paymentMethod: method,
+      };
+
+      await api.post("/payments/initiate", payload);
+      message.success("Payment initiated successfully!");
+      fetchPaymentHistory();
+      form.resetFields();
+    } catch (err) {
+      console.error("Payment error:", err);
+      message.error(err?.response?.data?.message || "Payment failed");
+    }
+  };
 
   return (
     <Layout className="payment-container">
-      {/* Sidebar */}
-
-      {/* Main Content */}
       <Layout>
         <Content className="content-section">
           <div className="payment-header">
             <Title level={3}>Payment</Title>
-            <Button className="payment-history-btn">📜 Payment History</Button>
+            <Button
+              onClick={fetchPaymentHistory}
+              className="payment-history-btn"
+            >
+              📜 Refresh History
+            </Button>
           </div>
 
-          {/* Tabs */}
           <Tabs
             activeKey={activeTab}
             onChange={setActiveTab}
             className="payment-tabs"
           >
             <Tabs.TabPane tab="Card" key="Card">
-              <Form layout="vertical" className="payment-form">
+              <Form layout="vertical" form={form} className="payment-form">
                 <Title level={5}>Payment Method</Title>
                 <Radio.Group value="Card">
                   <Radio.Button value="Card" className="active-tab">
@@ -87,7 +106,11 @@ const PaymentCard = () => {
                   </Radio.Button>
                 </Radio.Group>
 
-                <Form.Item label="Amount">
+                <Form.Item
+                  name="amount"
+                  label="Amount"
+                  rules={[{ required: true, message: "Please enter amount" }]}
+                >
                   <Input placeholder="₦0.00" />
                 </Form.Item>
 
@@ -110,8 +133,17 @@ const PaymentCard = () => {
                 </Text>
 
                 <div className="modal-footer">
-                  <Button className="cancel-btn">Cancel</Button>
-                  <Button type="primary" className="pay-btn">
+                  <Button
+                    className="cancel-btn"
+                    onClick={() => form.resetFields()}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="primary"
+                    className="pay-btn"
+                    onClick={() => handlePayment("Card")}
+                  >
                     Pay
                   </Button>
                 </div>
@@ -119,7 +151,7 @@ const PaymentCard = () => {
             </Tabs.TabPane>
 
             <Tabs.TabPane tab="Bank Transfer" key="Bank Transfer">
-              <Form layout="vertical" className="payment-form">
+              <Form layout="vertical" form={form} className="payment-form">
                 <Title level={5}>Payment Method</Title>
                 <Radio.Group value="Bank Transfer">
                   <Radio.Button value="Card">💳 Card</Radio.Button>
@@ -128,7 +160,11 @@ const PaymentCard = () => {
                   </Radio.Button>
                 </Radio.Group>
 
-                <Form.Item label="Amount">
+                <Form.Item
+                  name="amount"
+                  label="Amount"
+                  rules={[{ required: true, message: "Please enter amount" }]}
+                >
                   <Input placeholder="₦0.00" />
                 </Form.Item>
 
@@ -141,8 +177,17 @@ const PaymentCard = () => {
                 </Form.Item>
 
                 <div className="modal-footer">
-                  <Button className="cancel-btn">Cancel</Button>
-                  <Button type="primary" className="confirm-btn">
+                  <Button
+                    className="cancel-btn"
+                    onClick={() => form.resetFields()}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="primary"
+                    className="confirm-btn"
+                    onClick={() => handlePayment("Bank Transfer")}
+                  >
                     I have paid
                   </Button>
                 </div>
@@ -150,12 +195,13 @@ const PaymentCard = () => {
             </Tabs.TabPane>
           </Tabs>
 
-          {/* Payment History Table */}
           <Title level={4}>Payment History</Title>
           <Table
             columns={columns}
             dataSource={paymentHistory}
+            loading={loading}
             pagination={false}
+            rowKey="sn"
           />
         </Content>
       </Layout>

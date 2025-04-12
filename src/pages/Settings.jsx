@@ -30,6 +30,30 @@ const { Option } = Select;
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState("Profile");
+  const [form] = Form.useForm();
+
+  const handleSecuritySubmit = async () => {
+    try {
+      const values = await form.validateFields();
+
+      if (values.newPassword !== values.confirmPassword) {
+        return message.error("New passwords do not match!");
+      }
+
+      await api.post("/auth/change-password", {
+        currentPassword: values.currentPassword,
+        newPassword: values.newPassword,
+        confirmNewPassword: values.confirmPassword,
+      });
+
+      message.success("Password updated successfully!");
+      form.resetFields();
+    } catch (error) {
+      message.error(
+        error?.response?.data?.message || "Failed to update password"
+      );
+    }
+  };
 
   return (
     <Layout className="settings-container">
@@ -95,34 +119,57 @@ const Settings = () => {
             </Tabs.TabPane>
 
             <Tabs.TabPane tab="Security" key="Security">
-              <Form layout="vertical" className="security-form">
+              <Form layout="vertical" className="security-form" form={form}>
                 <Title level={4}>Password</Title>
                 <div className="form-row">
-                  <Form.Item label="Current Password" className="form-item">
-                    <Input.Password placeholder="Enter new password" />
+                  <Form.Item
+                    name="currentPassword"
+                    label="Current Password"
+                    rules={[
+                      { required: true, message: "Enter current password" },
+                    ]}
+                  >
+                    <Input.Password placeholder="Current password" />
                   </Form.Item>
-                  <Form.Item label="New Password" className="form-item">
-                    <Input.Password placeholder="Enter new password" />
+                  <Form.Item
+                    name="newPassword"
+                    label="New Password"
+                    rules={[{ required: true, message: "Enter new password" }]}
+                  >
+                    <Input.Password placeholder="New password" />
                   </Form.Item>
                 </div>
 
-                <Form.Item label="Confirm New Password">
-                  <Input.Password placeholder="Enter new password" />
+                <Form.Item
+                  name="confirmPassword"
+                  label="Confirm New Password"
+                  rules={[{ required: true, message: "Confirm new password" }]}
+                >
+                  <Input.Password placeholder="Confirm password" />
                 </Form.Item>
 
                 <Title level={4}>Notifications</Title>
                 <Text>Email Notification</Text>
                 <Switch defaultChecked />
-
+                <br />
                 <Text>SMS Notification</Text>
                 <Switch />
-
+                <br />
                 <Text>WhatsApp Notification</Text>
                 <Switch defaultChecked />
 
                 <div className="modal-footer">
-                  <Button className="cancel-btn">Cancel</Button>
-                  <Button type="primary" className="save-btn">
+                  <Button
+                    className="cancel-btn"
+                    onClick={() => form.resetFields()}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="primary"
+                    className="save-btn"
+                    onClick={handleSecuritySubmit}
+                  >
                     Save Changes
                   </Button>
                 </div>

@@ -50,3 +50,108 @@
   color: white;
   border: none;
 }
+
+/* Base Styles Already Defined Above... */
+
+/* ================
+   Responsive Styles
+   ================ */
+
+/* Tablets and below (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .payment-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .payment-history-btn {
+    width: 100%;
+  }
+
+  .form-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .form-item {
+    flex: 1;
+    min-width: 45%;
+  }
+
+  .payment-form {
+    width: 100%;
+  }
+}
+
+/* Mobile Devices (max-width: 768px) */
+@media (max-width: 768px) {
+  .payment-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .payment-history-btn {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .form-item {
+    width: 100%;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .cancel-btn,
+  .pay-btn,
+  .confirm-btn {
+    width: 100%;
+  }
+
+  .payment-form {
+    max-width: 100%;
+  }
+
+  .payment-tabs .ant-tabs-tab {
+    font-size: 14px;
+  }
+
+  .ant-table-wrapper {
+    overflow-x: auto;
+  }
+}
+
+/* Extra Small Devices (max-width: 480px) */
+@media (max-width: 480px) {
+  .payment-history-btn {
+    font-size: 13px;
+  }
+
+  .payment-tabs .ant-tabs-tab {
+    font-size: 13px;
+  }
+
+  .payment-header h3 {
+    font-size: 20px;
+  }
+
+  .payment-form input,
+  .payment-form .ant-select-selector {
+    font-size: 13px;
+  }
+
+  .modal-footer button {
+    font-size: 14px;
+  }
+}

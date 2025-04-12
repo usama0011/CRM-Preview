@@ -38,3 +38,88 @@
 .delete-icon:hover {
   color: #ff4d4f;
 }
+
+/* ================
+   Responsive Layout
+   ================ */
+
+/* Tablets and below */
+@media (max-width: 1024px) {
+  .delivery-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .download-report-btn {
+    width: 100%;
+  }
+
+  .ant-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+  .ant-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .delivery-tabs .ant-tabs-tab {
+    font-size: 14px;
+  }
+}
+
+/* Mobile (768px and below) */
+@media (max-width: 768px) {
+  .delivery-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .download-report-btn {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .delivery-tabs {
+    margin-top: 10px;
+  }
+
+  .ant-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+  .ant-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .ant-table {
+    font-size: 13px;
+  }
+}
+
+/* Extra Small Devices (max-width: 480px) */
+@media (max-width: 480px) {
+  .delivery-header h3 {
+    font-size: 20px;
+  }
+
+  .download-report-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .ant-tabs-tab {
+    font-size: 13px;
+  }
+
+  .ant-table {
+    font-size: 12px;
+  }
+
+  .delete-icon {
+    font-size: 16px;
+  }
+}

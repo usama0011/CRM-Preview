@@ -25,7 +25,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import "../styles/AdminLayout.css";
-
+import adminLogo from "../assets/adminlogo.png";
 const { Header, Sider, Content } = Layout;
 
 const AdminLayout = () => {
@@ -58,30 +58,40 @@ const AdminLayout = () => {
 
   return (
     <Layout className="admin-layout">
-      {/* Sidebar */}
       <Sider
         collapsible
         collapsed={collapsed}
         onCollapse={setCollapsed}
+        trigger={null}
         className="sidebar"
-        width={230}
+        width={300}
       >
+        {/* Top Logo and Toggle */}
         <div className="sidebar-logo">
-          <img
-            src="https://s3-alpha-sig.figma.com/img/f050/a83a/e31753cdfc55a452f9e80da2ef64a3b5?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=KFH2mv2I1IVUpnsHdtV7XRGi276THvB9yRmE6~6nOQ7qEUbFz1IvmUHNG40AF2mk8v~bGZdAa09~EASeDmsot8tzx7e4sbI75eh66wfhnIRPjOcKvEnyUYNaJzTyTUYZ9m69ylSktZn~DShj0Pcfak95cB8ugArYFpI19s-LlIUlP79bNNXShYbjNvZ~n0z0IF~tfTvvMbKa6WxdEP4fOOAWaiE4z16BAXPSueajx7FrYj7-bTB9gbcZs6DNE61ScSCS5SPbz4KPSeOU5H1xMYHo333S66zhrqK-xw8ZG5U7xua4OJ2ad~vblfFph5F2EDpDSZ14~Q1iDcvusRUmtA__"
-            alt="Dejyle"
-            className="logo"
+          {!collapsed && (
+            <>
+              <img src={adminLogo} alt="Dejyle" className="logosss" />
+            </>
+          )}
+          <Button
+            className="menu-toggle"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
           />
-          {!collapsed && <span className="brand-name">Dejyle</span>}
         </div>
 
-        <Menu theme="light" mode="vertical" defaultSelectedKeys={["1"]}>
+        {/* Sidebar Menu */}
+        <Menu
+          theme="light"
+          mode="vertical"
+          defaultSelectedKeys={["1"]}
+          className="custom-menu"
+        >
           <Menu.Item key="1" icon={<HomeOutlined />}>
             <Link to="/admin/overview">Overview</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<MessageOutlined />}>
-            <Link to="/admin/sms">Messages</Link>{" "}
-            {/* If "sms" is the actual route */}
+            <Link to="/admin/sms">Messages</Link>
           </Menu.Item>
           <Menu.Item key="3" icon={<ContactsOutlined />}>
             <Link to="/admin/contacts">Contacts</Link>
@@ -97,12 +107,12 @@ const AdminLayout = () => {
           </Menu.Item>
         </Menu>
 
-        {/* Logout at bottom */}
+        {/* Fixed Logout Button */}
         <div className="sidebar-footer">
           <Button
             className="logout-btn"
-            onClick={handleLogout}
             icon={<LogoutOutlined />}
+            onClick={handleLogout}
           >
             {!collapsed && "Logout"}
           </Button>
@@ -200,7 +210,7 @@ const AdminLayout = () => {
         </Header>
 
         {/* Page Content */}
-        <Content className="admin-content">
+        <Content className={`admin-content ${collapsed ? "collapsed" : ""}`}>
           <Outlet />
         </Content>
       </Layout>

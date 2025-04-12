@@ -40,3 +40,93 @@
   color: white;
   border: none;
 }
+
+/* =============================
+   Responsive Contacts Page
+   ============================= */
+
+/* Tablets and below (1024px) */
+@media (max-width: 1024px) {
+  .contacts-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .contacts-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .contacts-actions button {
+    margin-left: 0;
+  }
+
+  .ant-table-wrapper {
+    overflow-x: auto;
+  }
+}
+
+/* Mobile (768px and below) */
+@media (max-width: 768px) {
+  .contacts-header {
+    gap: 10px;
+  }
+
+  .contacts-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .contacts-actions button {
+    width: 100%;
+  }
+
+  .ant-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .add-contact-btn,
+  .upload-contact-btn {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .cancel-btn,
+  .add-btn {
+    width: 100%;
+  }
+}
+
+/* Extra Small Devices (480px and below) */
+@media (max-width: 480px) {
+  .contacts-header h3 {
+    font-size: 20px;
+  }
+
+  .add-contact-btn,
+  .upload-contact-btn {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .cancel-btn,
+  .add-btn {
+    font-size: 14px;
+  }
+
+  .ant-table {
+    font-size: 13px;
+  }
+}

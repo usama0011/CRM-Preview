@@ -1,31 +1,11 @@
-import React, { useState } from "react";
-import {
-  Layout,
-  Menu,
-  Typography,
-  Avatar,
-  Input,
-  Tabs,
-  Table,
-  Button,
-} from "antd";
-import {
-  HomeOutlined,
-  MessageOutlined,
-  ContactsOutlined,
-  FileTextOutlined,
-  CreditCardOutlined,
-  SettingOutlined,
-  LogoutOutlined,
-  MenuOutlined,
-  SearchOutlined,
-  DownloadOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
+import React, { useState, useEffect } from "react";
+import { Layout, Typography, Tabs, Table, Button, message } from "antd";
+import { DownloadOutlined, DeleteOutlined } from "@ant-design/icons";
 import "../styles/DeliveryReport.css";
+import api from "../components/api"; // ✅ Make sure this path is correct
 
-const { Header, Sider, Content } = Layout;
-const { Title, Text } = Typography;
+const { Content } = Layout;
+const { Title } = Typography;
 
 const columns = [
   { title: "S/N", dataIndex: "sn", key: "sn" },
@@ -52,71 +32,41 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    key: "1",
-    sn: "1",
-    recipient: "+080 000 458 7282",
-    sentDate: "Jun 9, 2024, 11:45pm",
-    deliveryDate: "Jun 9, 2024, 11:45pm",
-    volume: "1",
-    status: "Delivered",
-  },
-  {
-    key: "2",
-    sn: "2",
-    recipient: "+080 000 458 7282",
-    sentDate: "Jun 9, 2024, 11:45pm",
-    deliveryDate: "Jun 9, 2024, 11:45pm",
-    volume: "1",
-    status: "Failed",
-  },
-  {
-    key: "3",
-    sn: "3",
-    recipient: "+080 000 458 7282",
-    sentDate: "Jun 9, 2024, 11:45pm",
-    deliveryDate: "Jun 9, 2024, 11:45pm",
-    volume: "1",
-    status: "Delivered",
-  },
-  {
-    key: "4",
-    sn: "4",
-    recipient: "Clients",
-    sentDate: "Jun 9, 2024, 11:45pm",
-    deliveryDate: "Jun 9, 2024, 11:45pm",
-    volume: "45",
-    status: "40 Delivered, 5 Failed",
-  },
-  {
-    key: "5",
-    sn: "5",
-    recipient: "+080 000 458 7282",
-    sentDate: "Jun 9, 2024, 11:45pm",
-    deliveryDate: "Jun 9, 2024, 11:45pm",
-    volume: "1",
-    status: "Delivered",
-  },
-  {
-    key: "6",
-    sn: "6",
-    recipient: "Customers",
-    sentDate: "Jun 9, 2024, 11:45pm",
-    deliveryDate: "Jun 9, 2024, 11:45pm",
-    volume: "300",
-    status: "Delivered",
-  },
-];
-
 const DeliveryReport = () => {
   const [activeTab, setActiveTab] = useState("SMS");
+  const [reportData, setReportData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchDeliveryReport = async () => {
+      try {
+        setLoading(true);
+        const response = await api.get("/transactions/getDeliveryReport");
+
+        const mappedData = response.data.data.map((item, index) => ({
+          key: item._id || index,
+          sn: index + 1,
+          recipient: item.recipient || "N/A",
+          sentDate: item.sentDate || "N/A",
+          deliveryDate: item.deliveryDate || "N/A",
+          volume: item.volume || 1,
+          status: item.status || "Pending",
+        }));
+
+        setReportData(mappedData);
+      } catch (err) {
+        console.error("Error fetching delivery report", err);
+        message.error("Failed to load delivery report.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDeliveryReport();
+  }, []);
 
   return (
     <Layout className="delivery-report-container">
-      {/* Sidebar */}
-
-      {/* Main Content */}
       <Layout>
         <Content className="content-section">
           <div className="delivery-header">
@@ -126,7 +76,6 @@ const DeliveryReport = () => {
             </Button>
           </div>
 
-          {/* Tabs */}
           <Tabs
             activeKey={activeTab}
             onChange={setActiveTab}
@@ -135,21 +84,24 @@ const DeliveryReport = () => {
             <Tabs.TabPane tab="SMS" key="SMS">
               <Table
                 columns={columns}
-                dataSource={data}
+                dataSource={reportData}
+                loading={loading}
                 pagination={{ pageSize: 10 }}
               />
             </Tabs.TabPane>
             <Tabs.TabPane tab="Email" key="Email">
               <Table
                 columns={columns}
-                dataSource={data}
+                dataSource={reportData}
+                loading={loading}
                 pagination={{ pageSize: 10 }}
               />
             </Tabs.TabPane>
             <Tabs.TabPane tab="WhatsApp" key="WhatsApp">
               <Table
                 columns={columns}
-                dataSource={data}
+                dataSource={reportData}
+                loading={loading}
                 pagination={{ pageSize: 10 }}
               />
             </Tabs.TabPane>

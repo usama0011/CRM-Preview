@@ -4,6 +4,7 @@ import { GoogleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/SignIn.css";
+import api from "../components/api"; // adjust path if needed
 
 const { Title, Text } = Typography;
 
@@ -11,19 +12,17 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const tenantId = localStorage.getItem("tenantId");
 
   const onFinish = async (values) => {
     setError(null);
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "http://54.243.4.152:3000/api/auth/login",
-        {
-          email: values.email,
-          password: values.password,
-        }
-      );
+      const response = await api.post("/auth/login", {
+        email: values.email,
+        password: values.password,
+      });
 
       // Handle token or user data here (optional)
       message.success("Login successful!");
